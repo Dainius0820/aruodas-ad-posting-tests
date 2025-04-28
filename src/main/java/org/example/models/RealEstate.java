@@ -96,7 +96,8 @@ public class RealEstate {
         }catch (Exception e){}
     }
 
-    public void fillSpecials() {}
+    public void fillSpecials() {
+    }
 
 
 
