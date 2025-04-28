@@ -158,7 +158,7 @@ public class Plot {
     }
 
     private void fillIntendances() {
-        List<WebElement> intendances = driver.findElements(By.xpath("//input[@name='FIntendance[]']/following-sibling::label"));
+        List<WebElement> intendances = this.driver.findElements(By.xpath("//input[@name='FIntendance[]']/following-sibling::label"));
         for (int i = 0; i < this.intendances.length ; i++) {
             switch (this.intendances[i]) {
                 case 1:
@@ -198,8 +198,8 @@ public class Plot {
     }
 
     private void fillSpecials() {
-        driver.findElement(By.id("showMoreFields")).click();
-        List<WebElement> specials = driver.findElements(By.xpath("//input[@name='Special[]']/following-sibling::label"));
+        this.driver.findElement(By.id("showMoreFields")).click();
+        List<WebElement> specials = this.driver.findElements(By.xpath("//input[@name='Special[]']/following-sibling::label"));
         for (int i = 0; i < this.specials.length; i++) {
             switch (this.specials[i]){
                 case 1:
@@ -235,37 +235,31 @@ public class Plot {
         }
     }
 
-    public void wait (int time) {
-        try{
-            Thread.sleep(time);
-        }catch (Exception e){}
-    }
-
     private void fillInterestedChange() {
         if (this.interestedChange) {
-            driver.findElement(By.cssSelector("label[for='cbInterestedChange']")).click();
+            this.driver.findElement(By.cssSelector("label[for='cbInterestedChange']")).click();
         }
     }
 
     private void fillForAuction(){
         if (this.forAuction){
-            driver.findElement(By.cssSelector("label[for='cbAuction']")).click();
+            this.driver.findElement(By.cssSelector("label[for='cbAuction']")).click();
         }
     }
 
     private void fillNotes_lt() {
-        driver.findElement(By.cssSelector("label[for='langLt']")).click();
-        driver.findElement(By.name("notes_lt")).sendKeys(this.notes_lt);
+        this.driver.findElement(By.cssSelector("label[for='langLt']")).click();
+        this.driver.findElement(By.name("notes_lt")).sendKeys(this.notes_lt);
     }
 
     private void fillNotes_en(){
-        driver.findElement(By.cssSelector("label[for='langEn']")).click();
-        driver.findElement(By.name("notes_en")).sendKeys(this.notes_en);
+        this.driver.findElement(By.cssSelector("label[for='langEn']")).click();
+        this.driver.findElement(By.name("notes_en")).sendKeys(this.notes_en);
     }
 
     private void fillNotes_ru(){
-        driver.findElement(By.cssSelector("label[for='langRu']")).click();
-        driver.findElement(By.name("notes_ru")).sendKeys(this.notes_ru);
+        this.driver.findElement(By.cssSelector("label[for='langRu']")).click();
+        this.driver.findElement(By.name("notes_ru")).sendKeys(this.notes_ru);
     }
 
     private void fillPhotos() {
@@ -274,61 +268,72 @@ public class Plot {
         for (int i = 0; i < this.photos.length; i++) {
             abs[i] = base + this.photos[i];
         }
-        driver.findElement(By.xpath("//a[@id='uploadPhotoBtn']//input[@type='file']")).sendKeys(String.join("\n", abs));
+        this.driver.findElement(By.xpath("//a[@id='uploadPhotoBtn']//input[@type='file']")).sendKeys(String.join("\n", abs));
     }
 
     private void fillVideo() {
-        driver.findElement(By.name("Video")).sendKeys(this.video);
+        this.driver.findElement(By.name("Video")).sendKeys(this.video);
     }
 
     private void fillTour3D() {
-        driver.findElement(By.name("tour_3d")).sendKeys(this.tour3d);
+        this.driver.findElement(By.name("tour_3d")).sendKeys(this.tour3d);
     }
 
     private void fillPrice() {
-        driver.findElement(By.id("priceField")).sendKeys(this.price);
+        this.driver.findElement(By.id("priceField")).sendKeys(this.price);
     }
 
     private void fillPhone() {
-        driver.findElement(By.name("phone")).clear();
-        driver.findElement(By.name("phone")).sendKeys(this.phone);
+        this.driver.findElement(By.name("phone")).clear();
+        this.driver.findElement(By.name("phone")).sendKeys(this.phone);
     }
 
     private void fillEmail() {
-        driver.findElement(By.name("email")).sendKeys(this.email);
+        this.driver.findElement(By.name("email")).sendKeys(this.email);
     }
 
     private void fillCbDont_show_in_ads() {
         if (this.cbdont_show_in_ads) {
-            driver.findElement(By.cssSelector("label[for='cbdont_show_in_ads']")).click();
+            this.driver.findElement(By.cssSelector("label[for='cbdont_show_in_ads']")).click();
         }
 
     }
 
     private void fillCbDont_want_chat() {
         if (this.cbdont_want_chat) {
-            driver.findElement(By.cssSelector("label[for='cbdont_want_chat']")).click();
+            this.driver.findElement(By.cssSelector("label[for='cbdont_want_chat']")).click();
         }
     }
 
     private void fillAccountType() {
         switch(this.accountType){
             case 1:
-                driver.findElement(By.cssSelector("div.input-button[data-value='1'][data-title='Privatus asmuo']")).click();
+                this.driver.findElement(By.cssSelector("div.input-button[data-value='1'][data-title='Privatus asmuo']")).click();
                 break;
             case 2:
-                driver.findElement(By.cssSelector("div.input-button[data-value='2'][data-title='Tarpininkas']")).click();
+                this.driver.findElement(By.cssSelector("div.input-button[data-value='2'][data-title='Tarpininkas']")).click();
+                break;
             case 3:
-                driver.findElement(By.cssSelector("div.input-button[data-value='3'][data-title='Vystytojas/statytojas']")).click();
+                this.driver.findElement(By.cssSelector("div.input-button[data-value='3'][data-title='Vystytojas/statytojas']")).click();
+                break;
             case 4:
-                driver.findElement(By.cssSelector("div.input-button[data-value='4'][data-title='Kitas verslo subjektas']")).click();
+                this.driver.findElement(By.cssSelector("div.input-button[data-value='4'][data-title='Kitas verslo subjektas']")).click();
+                break;
+            default:
+                break;
         }
     }
 
     private void fillCbAgree_to_rules() {
         if (this.cbagree_to_rules) {
-            driver.findElement(By.xpath("//label[@for='cbagree_to_rules']//span")).click();
+            this.driver.findElement(By.xpath("//label[@for='cbagree_to_rules']//span")).click();
         }
+    }
+
+    public void wait (int time) {
+        try{
+            Thread.sleep(time);
+        }catch (Exception e){}
     }
 
 }
