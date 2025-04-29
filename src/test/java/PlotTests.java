@@ -1,35 +1,29 @@
+import org.example.Helper;
 import org.example.models.Plot;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.time.Duration;
+
 
 public class PlotTests {
     public static WebDriver driver;
     
     @BeforeClass
     public void setUp(){
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        acceptCookies();
+        Helper.setUp();
+        driver = Helper.driver;
     }
 
-    public void acceptCookies() {
+    @BeforeMethod
+    public void beforeMethod(){
         driver.get("https://www.aruodas.lt/ideti-skelbima/?obj=11&offer_type=1");
-        driver.findElement(By.id("onetrust-accept-btn-handler")).click();
     }
 
     @Test
     public void positiveTest(){
-        Plot plot = new Plot(driver,"Vilnius","Vilniaus m.","Baltupiai","Goštauto","15",
-                "1111-1111-1111","45",new int[]{1,3,7},new int[]{1,3,7},false,false,
-                "pardodu plota", "plot for seil", "a?????",new String[]{"plotas.jpg"},
-                "https://www.youtube.com/watch?v=-nWYn6XB6Hg","tour3d.com","1000","+37061111111",
-                "ne@tavo.reikalas",false,true,1,true);
+        Plot plot = new Plot("Vilnius","Vilniaus m.","Baltupiai","Goštauto","15","1111-1111-1111:11111",new String[]{"Greta miško", "Elektra", "Su pakrante"},false,false,"pardodu plota","plot for seil","a?????",new String[]{"plotas.jpg"},"https://www.youtube.com/watch?v=-nWYn6XB6Hg","tour3d.com","10000","+37061111111","ne@tavo.reikalas",true,true,1,true,"45",new int[]{1,3,7});
         plot.fill();
         String actual = "";
         Assert.assertEquals(actual, "");
