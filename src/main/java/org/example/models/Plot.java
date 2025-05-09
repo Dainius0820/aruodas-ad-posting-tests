@@ -8,8 +8,8 @@ public class Plot extends RealEstate {
 
     public int[] intendances;
 
-    public Plot(String region, String district, String quartal, String street, String objNum, String rcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dont_show_in_ads, boolean dont_want_chat, int accountType, boolean agree_to_rules, String plotSize, int[] intendances) {
-        super(region, district, quartal, street, objNum, rcNum, specials, interestedChange, forAuction, notes_lt, notes_en, notes_ru, photos, video, tour3d, price, phone, email, dont_show_in_ads, dont_want_chat, accountType, agree_to_rules);
+    public Plot(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dont_show_in_ads, boolean dont_want_chat, int accountType, boolean agree_to_rules, String plotSize, int[] intendances) {
+        super(region, district, quartal, street, objNum, showObjNum, rcNum, showRcNum, specials, interestedChange, forAuction, notes_lt, notes_en, notes_ru, photos, video, tour3d, price, phone, email, dont_show_in_ads, dont_want_chat, accountType, agree_to_rules);
         this.plotSize = plotSize;
         this.intendances = intendances;
     }
@@ -18,6 +18,7 @@ public class Plot extends RealEstate {
         super.fill();
         this.fillPlotSize();
         this.fillIntendances();
+        this.driver.findElement(By.id("submitFormButton")).click();
     }
 
     private void fillPlotSize() {

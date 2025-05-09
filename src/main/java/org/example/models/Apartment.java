@@ -7,6 +7,8 @@ import java.util.List;
 public class Apartment extends RealEstate {
     public String apartNum;
 
+    public boolean showApartNum;
+
     public String squareMeters;
 
     public int roomNum;
@@ -39,9 +41,10 @@ public class Apartment extends RealEstate {
 
     public int house_efficiency;
 
-    public Apartment(String region, String district, String quartal, String street, String objNum, String rcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean cbdont_show_in_ads, boolean cbdont_want_chat, int accountType, boolean cbagree_to_rules, String apartNum, String squareMeters, int roomNum, int apartFloor, int buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, int houseType, int houseState, int[] warmSystems, int apartType, int apartIntendance , int[] windows_direction, int house_efficiency) {
-        super(region, district, quartal, street, objNum, rcNum, specials, interestedChange, forAuction, notes_lt, notes_en, notes_ru, photos, video, tour3d, price, phone, email, cbdont_show_in_ads, cbdont_want_chat, accountType, cbagree_to_rules);
+    public Apartment(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dont_show_in_ads, boolean dont_want_chat, int accountType, boolean agree_to_rules, String apartNum, boolean showApartNum, String squareMeters, int roomNum, int apartFloor, int buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, int houseType, int houseState, int[] warmSystems, int apartType, int apartIntendance, int[] windows_direction, int house_efficiency) {
+        super(region, district, quartal, street, objNum, showObjNum, rcNum, showRcNum, specials, interestedChange, forAuction, notes_lt, notes_en, notes_ru, photos, video, tour3d, price, phone, email, dont_show_in_ads, dont_want_chat, accountType, agree_to_rules);
         this.apartNum = apartNum;
+        this.showApartNum = showApartNum;
         this.squareMeters = squareMeters;
         this.roomNum = roomNum;
         this.apartFloor = apartFloor;
@@ -64,6 +67,7 @@ public class Apartment extends RealEstate {
     public void fill() {
         super.fill();
         this.fillApartNum();
+        this.fillShowApartNum();
         this.fillSquareMeters();
         this.fillRoomNum();
         this.fillApartBuildingFloor();
@@ -76,10 +80,17 @@ public class Apartment extends RealEstate {
         this.fillApartType();
         this.fillWindows_direction();
         this.fillHouse_efficiency();
+        this.driver.findElement(By.id("submitFormButton")).click();
     }
 
     private void fillApartNum() {
         this.driver.findElement(By.name("FApartNum")).sendKeys(this.apartNum);
+    }
+
+    private void fillShowApartNum() {
+        if (!this.showApartNum) {
+            this.driver.findElement(By.xpath("//label[@for='cbshow_apart_num']")).click();
+        }
     }
 
     private void fillSquareMeters() {
@@ -279,6 +290,7 @@ public class Apartment extends RealEstate {
         if(this.apartType == 1) {
             return;
         }
+
         this.driver.findElement(By.xpath("//div[@data-key='ApartmentType']//div[@data-value='" + this.apartType + "']")).click();
         wait(500);
 

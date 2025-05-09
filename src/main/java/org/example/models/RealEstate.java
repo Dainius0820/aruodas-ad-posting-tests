@@ -17,7 +17,11 @@ public class RealEstate {
 
     public String objNum;
 
+    public boolean showObjNum;
+
     public String rcNum;
+
+    public boolean showRcNum;
 
     public String[] specials;
 
@@ -54,14 +58,16 @@ public class RealEstate {
     public RealEstate() {
     }
 
-    public RealEstate(String region, String district, String quartal, String street, String objNum, String rcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dont_show_in_ads, boolean dont_want_chat, int accountType, boolean agree_to_rules) {
+    public RealEstate(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notes_lt, String notes_en, String notes_ru, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dont_show_in_ads, boolean dont_want_chat, int accountType, boolean agree_to_rules) {
         this.driver = Helper.driver;
         this.region = region;
         this.district = district;
         this.quartal = quartal;
         this.street = street;
         this.objNum = objNum;
+        this.showObjNum = showObjNum;
         this.rcNum = rcNum;
+        this.showRcNum = showRcNum;
         this.specials = specials;
         this.interestedChange = interestedChange;
         this.forAuction = forAuction;
@@ -84,12 +90,12 @@ public class RealEstate {
         this.fillLocation();
         this.fillSpecials();
         this.fillObjNum();
+        this.fillShowObjNum();
         this.fillRcNum();
+        this.fillShowRcNum();
         this.fillInterestedChange();
         this.fillForAuction();
-        this.fillNotes_lt();
-        this.fillNotes_en();
-        this.fillNotes_ru();
+        this.fillNotes();
         this.fillPhotos();
         this.fillVideo();
         this.fillTour3d();
@@ -109,39 +115,60 @@ public class RealEstate {
         this.fillStreet();
     }
 
-    private void fillRegion() {
-        this.driver.findElements(By.className("dropdown-input-value-title")).get(0).click();
-        this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(this.region);
-        wait(300);
-        this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(Keys.ENTER);
+    public void fillNotes() {
+        this.fillNotes_lt();
+        this.fillNotes_en();
+        this.fillNotes_ru();
     }
 
-    private void fillDistrict() { //padaryti veliau
-//        this.driver.findElements(By.className("dropdown-input-value-title")).get(1).click();
-//        this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(this.region);
-//        this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(Keys.ENTER);
+    private void fillRegion() {
+        if (!this.region.isEmpty()) {
+            this.driver.findElements(By.className("dropdown-input-value-title")).get(0).click();
+            this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(this.region);
+            wait(300);
+            this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(Keys.ENTER);
+        }
     }
+
+    private void fillDistrict() {
+        if (!this.region.isEmpty()) {
+            this.driver.findElements(By.className("dropdown-input-value-title")).get(1).click();
+            this.driver.findElement(By.xpath("//ul[contains(@class, 'dropdown-input-values-address')]/li[normalize-space(text())='" + this.district + "']")).click();
+        }
+    }
+
     private void fillQuartal() {
-        this.driver.findElements(By.className("dropdown-input-value-title")).get(2).click();
-        this.driver.findElements(By.className("dropdown-input-search-value")).get(1).sendKeys(this.quartal);//veliau reikes korekciju
-        wait(2000);
-        this.driver.findElements(By.className("dropdown-input-search-value")).get(1).sendKeys(Keys.ENTER);
+        if (!this.region.isEmpty()) {
+            this.driver.findElements(By.className("dropdown-input-value-title")).get(2).click();
+            this.driver.findElement(By.xpath("//ul[contains(@id, 'quartals_')]//li[contains(normalize-space(text()), '" + this.quartal + "')]")).click();
+        }
     }
 
     private void fillStreet() {
-        this.driver.findElements(By.className("dropdown-input-value-title")).get(3).click();
-        wait(200);
-        this.driver.findElement(By.xpath("//*[@id=\"streets_1\"]/li[1]/input")).sendKeys(this.street);//veliau reikes korekciju
-        wait(500);
-        this.driver.findElement(By.xpath("//*[@id=\"streets_1\"]/li[1]/input")).sendKeys(Keys.ENTER);
+        if (!this.region.isEmpty()){
+            this.driver.findElements(By.className("dropdown-input-value-title")).get(3).click();
+            this.driver.findElement(By.xpath("//ul[contains(@id, 'streets_')]//li[contains(normalize-space(text()), '" + this.street + "')]")).click();
+        }
     }
 
     private void fillObjNum() {
         this.driver.findElement(By.name("FHouseNum")).sendKeys(this.objNum);
     }
 
+    private void fillShowObjNum() {
+        if (!this.showObjNum) {
+            this.driver.findElement(By.xpath("//label[@for='cbshow_house_num']")).click();
+        }
+    }
+
     private void fillRcNum() {
         this.driver.findElement(By.name("RCNumber")).sendKeys(this.rcNum);
+    }
+
+    private void fillShowRcNum() {
+       if (!this.showRcNum) {
+           this.driver.findElement(By.xpath("//label[@for='cbshow_rc_number']")).click();
+       }
     }
 
     private void fillSpecials() {
@@ -263,6 +290,15 @@ public class RealEstate {
         try{
             Thread.sleep(time);
         }catch (Exception e){}
+    }
+
+    public static String generateRndSpecialChars(int length) {
+        String symbols = "\"#$%&'()*:;<=>?[\\]^_`{|}~";
+        String text = "";
+        for (int i = 0; i < length; i++) {
+            text += symbols.charAt((int) (Math.random()*symbols.length()));
+        }
+        return text;
     }
 
 }

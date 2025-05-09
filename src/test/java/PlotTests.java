@@ -23,7 +23,7 @@ public class PlotTests {
 
     @Test
     public void positiveTest(){
-        Plot plot = new Plot("Vilnius","Vilniaus m.","Baltupiai","Goštauto","15","1111-1111-1111:11111",new String[]{"Greta miško", "Elektra", "Su pakrante"},false,false,"pardodu plota","plot for seil","a?????",new String[]{"plotas.jpg"},"https://www.youtube.com/watch?v=-nWYn6XB6Hg","tour3d.com","10000","+37061111111","ne@tavo.reikalas",true,true,1,true,"45",new int[]{1,3,7});
+        Plot plot = new Plot("Vilnius","Vilniaus m.","Baltupiai","Goštauto","15",true,"1111-1111-1111:11111",true,new String[]{"Greta miško", "Elektra", "Su pakrante"},false,false,"pardodu plota","plot for seil","a?????",new String[]{"plotas.jpg"},"https://www.youtube.com/watch?v=-nWYn6XB6Hg","tour3d.com","10000","+37061111111","standard@gmail.com",true,true,1,true,"45",new int[]{1,3,7});
         plot.fill();
         String actual = "";
         Assert.assertEquals(actual, "");
