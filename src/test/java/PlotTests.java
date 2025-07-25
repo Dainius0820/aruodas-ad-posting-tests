@@ -18,7 +18,7 @@ public class PlotTests {
     }
 
     @BeforeMethod
-    public void beforeMethod() {
+    public void beforeTest() {
         driver.get("https://www.aruodas.lt/ideti-skelbima/?obj=11&offer_type=1");
     }
 

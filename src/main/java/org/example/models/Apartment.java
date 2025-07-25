@@ -9,7 +9,7 @@ public class Apartment extends RealEstate {
     public String apartNum;
     public boolean showApartNum;
     public String squareMeters;
-    public int roomNum;
+    public String roomNum;
     public int apartFloor;
     public int buildingFloor;
     public boolean enterCustomFloors;
@@ -25,7 +25,7 @@ public class Apartment extends RealEstate {
     public String[] windowsDirection;
     public String houseEfficiency;
 
-    public Apartment(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notesLt, String notesEn, String notesRu, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dontShowInAds, boolean dontWantChat, String accountType, boolean agreeToRules, String apartNum, boolean showApartNum, String squareMeters, int roomNum, int apartFloor, int buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, String houseType, String houseState, String[] warmSystems, int apartType, int apartIntendance, String[] windowsDirection, String houseEfficiency) {
+    public Apartment(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notesLt, String notesEn, String notesRu, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dontShowInAds, boolean dontWantChat, String accountType, boolean agreeToRules, String apartNum, boolean showApartNum, String squareMeters, String roomNum, int apartFloor, int buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, String houseType, String houseState, String[] warmSystems, int apartType, int apartIntendance, String[] windowsDirection, String houseEfficiency) {
         super(region, district, quartal, street, objNum, showObjNum, rcNum, showRcNum, specials, interestedChange, forAuction, notesLt, notesEn, notesRu, photos, video, tour3d, price, phone, email, dontShowInAds, dontWantChat, accountType, agreeToRules);
         this.apartNum = apartNum;
         this.showApartNum = showApartNum;
@@ -49,6 +49,11 @@ public class Apartment extends RealEstate {
 
     @Override
     public void fill() {
+        this.fillAllFields();
+        this.driver.findElement(By.id("submitFormButton")).click();
+    }
+
+    public void fillAllFields() {
         super.fill();
         this.fillApartNum();
         this.fillShowApartNum();
@@ -64,7 +69,6 @@ public class Apartment extends RealEstate {
         this.fillApartType();
         this.fillWindowsDirection();
         this.fillHouseEfficiency();
-        this.driver.findElement(By.id("submitFormButton")).click();
     }
 
     public void fillApartNum() {
@@ -84,11 +88,16 @@ public class Apartment extends RealEstate {
     public void fillRoomNum() {
         List<WebElement> inputValues = this.driver.findElement(By.xpath("//*[@data-key='FRoomNum']")).findElements(By.xpath(".//*[@data-value]"));
         switch (this.roomNum) {
-            case 1 -> inputValues.getFirst().click();
-            case 2 -> inputValues.get(1).click();
-            case 3 -> inputValues.get(2).click();
-            case 4 -> inputValues.get(3).click();
-            default -> this.driver.findElement(By.xpath(".//span[contains(@class,'input-style-text-unit')]//input[@type='text']")).sendKeys(Integer.toString(this.roomNum));
+            case "1" -> inputValues.getFirst().click();
+            case "2" -> inputValues.get(1).click();
+            case "3" -> inputValues.get(2).click();
+            case "4" -> inputValues.get(3).click();
+            default -> {
+                WebElement input = this.driver.findElement(By.xpath("//*[@data-key='FRoomNum']//span[contains(@class,'input-style-text-unit')]//input[@type='text']"));
+                input.clear();
+                input.sendKeys(this.roomNum);
+                input.sendKeys(Keys.TAB);
+            }
         }
     }
 

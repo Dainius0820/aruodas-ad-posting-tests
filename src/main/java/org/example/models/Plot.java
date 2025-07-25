@@ -14,10 +14,14 @@ public class Plot extends RealEstate {
 
     @Override
     public void fill() {
+        fillAllFields();
+        this.driver.findElement(By.id("submitFormButton")).click();
+    }
+
+    public void fillAllFields() {
         super.fill();
         this.fillPlotSize();
         this.fillIntendances();
-        this.driver.findElement(By.id("submitFormButton")).click();
     }
 
     public void fillPlotSize() {
