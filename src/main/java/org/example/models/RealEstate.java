@@ -245,7 +245,7 @@ public class RealEstate {
         }
     }
 
-    public static String normalizeInput(String text) {
+    public String normalizeInput(String text) {
         return text.toLowerCase()
                 .replace("ą", "a")
                 .replace("č", "c")

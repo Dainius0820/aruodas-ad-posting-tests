@@ -10,8 +10,8 @@ public class Apartment extends RealEstate {
     public boolean showApartNum;
     public String squareMeters;
     public String roomNum;
-    public int apartFloor;
-    public int buildingFloor;
+    public String apartFloor;
+    public String buildingFloor;
     public boolean enterCustomFloors;
     public boolean isElevator;
     public String buildYear;
@@ -25,7 +25,7 @@ public class Apartment extends RealEstate {
     public String[] windowsDirection;
     public String houseEfficiency;
 
-    public Apartment(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notesLt, String notesEn, String notesRu, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dontShowInAds, boolean dontWantChat, String accountType, boolean agreeToRules, String apartNum, boolean showApartNum, String squareMeters, String roomNum, int apartFloor, int buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, String houseType, String houseState, String[] warmSystems, int apartType, int apartIntendance, String[] windowsDirection, String houseEfficiency) {
+    public Apartment(String region, String district, String quartal, String street, String objNum, boolean showObjNum, String rcNum, boolean showRcNum, String[] specials, boolean interestedChange, boolean forAuction, String notesLt, String notesEn, String notesRu, String[] photos, String video, String tour3d, String price, String phone, String email, boolean dontShowInAds, boolean dontWantChat, String accountType, boolean agreeToRules, String apartNum, boolean showApartNum, String squareMeters, String roomNum, String apartFloor, String buildingFloor, boolean enterCustomFloors, boolean isElevator, String buildYear, boolean isRenovated, String renovatedYear, String houseType, String houseState, String[] warmSystems, int apartType, int apartIntendance, String[] windowsDirection, String houseEfficiency) {
         super(region, district, quartal, street, objNum, showObjNum, rcNum, showRcNum, specials, interestedChange, forAuction, notesLt, notesEn, notesRu, photos, video, tour3d, price, phone, email, dontShowInAds, dontWantChat, accountType, agreeToRules);
         this.apartNum = apartNum;
         this.showApartNum = showApartNum;
@@ -59,7 +59,7 @@ public class Apartment extends RealEstate {
         this.fillShowApartNum();
         this.fillSquareMeters();
         this.fillRoomNum();
-        this.fillApartBuildingFloor();
+        this.fillAptBuildingFloor();
         this.fillIsElevator();
         this.fillBuildYear();
         this.fillIsRenovated();
@@ -101,40 +101,99 @@ public class Apartment extends RealEstate {
         }
     }
 
-    public void fillApartBuildingFloor() {
-        if(this.enterCustomFloors || this.apartFloor > 4 || this.buildingFloor > this.apartFloor + 8) {
-            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
-            wait(500);
-            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//li[contains(@class,'manual-value-row')]//input")).sendKeys(Integer.toString(this.apartFloor), Keys.ENTER);
-
-            this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
-            wait(500);
-            this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//li[contains(@class,'manual-value-row')]//input")).sendKeys(Integer.toString(this.buildingFloor), Keys.ENTER);
+    public void fillAptBuildingFloor() {
+        if (this.enterCustomFloors || !isValidDropdown()) {
+            fillViaManualInput();
         } else {
-            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
-            wait(500);
-            List<WebElement> floorOptions = this.driver.findElements(By.xpath("//li[@id='fieldRow_FFloor']//ul[contains(@class,'dropdown-input-values')]/li[@data-value]"));
-            switch (this.apartFloor) {
-               case 1 -> floorOptions.getFirst().click();
-               case 2 -> floorOptions.get(1).click();
-               case 3 -> floorOptions.get(2).click();
-               case 4 -> floorOptions.get(3).click();
-           }
-           this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
-            wait(500);
-           List<WebElement> heightOptions = this.driver.findElements(By.xpath("//div[@id='fieldRow_FHouseHeight']//ul[contains(@class,'dropdown-input-values')]/li[@data-value]"));
-           switch (this.buildingFloor) {
-               case 1 -> heightOptions.getFirst().click();
-               case 2 -> heightOptions.get(1).click();
-               case 3 -> heightOptions.get(2).click();
-               case 4 -> heightOptions.get(3).click();
-               case 5 -> heightOptions.get(4).click();
-               case 6 -> heightOptions.get(5).click();
-               case 7 -> heightOptions.get(6).click();
-               case 8 -> heightOptions.get(7).click();
-               case 9 -> heightOptions.get(8).click();
-           }
+            fillViaDropdown();
         }
+//        if(this.enterCustomFloors || this.apartFloor > 4 || this.buildingFloor > this.apartFloor + 8) {
+//            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
+//            wait(500);
+//            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//li[contains(@class,'manual-value-row')]//input")).sendKeys(Integer.toString(this.apartFloor), Keys.ENTER);
+//
+//            this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
+//            wait(500);
+//            this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//li[contains(@class,'manual-value-row')]//input")).sendKeys(Integer.toString(this.buildingFloor), Keys.ENTER);
+//        } else {
+//            this.driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
+//            wait(500);
+//            List<WebElement> floorOptions = this.driver.findElements(By.xpath("//li[@id='fieldRow_FFloor']//ul[contains(@class,'dropdown-input-values')]/li[@data-value]"));
+//            switch (this.apartFloor) {
+//               case 1 -> floorOptions.getFirst().click();
+//               case 2 -> floorOptions.get(1).click();
+//               case 3 -> floorOptions.get(2).click();
+//               case 4 -> floorOptions.get(3).click();
+//           }
+//           this.driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
+//            wait(500);
+//           List<WebElement> heightOptions = this.driver.findElements(By.xpath("//div[@id='fieldRow_FHouseHeight']//ul[contains(@class,'dropdown-input-values')]/li[@data-value]"));
+//           switch (this.buildingFloor) {
+//               case 1 -> heightOptions.getFirst().click();
+//               case 2 -> heightOptions.get(1).click();
+//               case 3 -> heightOptions.get(2).click();
+//               case 4 -> heightOptions.get(3).click();
+//               case 5 -> heightOptions.get(4).click();
+//               case 6 -> heightOptions.get(5).click();
+//               case 7 -> heightOptions.get(6).click();
+//               case 8 -> heightOptions.get(7).click();
+//               case 9 -> heightOptions.get(8).click();
+//           }
+//        }
+    }
+
+    public boolean isValidDropdown() {
+        try {
+            int a = Integer.parseInt(this.apartFloor.trim());
+            int b = Integer.parseInt(this.buildingFloor.trim());
+            return a >= 1 && a <= 4 && b >= a && b <= a + 8;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public void fillViaManualInput() {
+        driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
+        wait(500);
+        WebElement aptInput = driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//li[contains(@class,'manual-value-row')]//input"));
+        aptInput.clear();
+        aptInput.sendKeys(this.apartFloor, Keys.ENTER);
+
+        wait(500);
+
+        driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
+        wait(500);
+        WebElement buildingInput = driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//li[contains(@class,'manual-value-row')]//input"));
+        buildingInput.clear();
+        buildingInput.sendKeys(this.buildingFloor, Keys.ENTER);
+
+        wait(500);
+    }
+
+    public void fillViaDropdown() {
+        driver.findElement(By.xpath("//li[@id='fieldRow_FFloor']//span[contains(@class,'input-right-dropdown')]")).click();
+        wait(500);
+        List<WebElement> aptOptions = driver.findElements(By.xpath("//li[@id='fieldRow_FFloor']//ul/li[@data-value]"));
+        for (WebElement option : aptOptions) {
+            if (option.getDomAttribute("data-value").equals(this.apartFloor)) {
+                option.click();
+                break;
+            }
+        }
+
+        wait(500);
+
+        driver.findElement(By.xpath("//div[@id='fieldRow_FHouseHeight']//span[contains(@class,'input-right-dropdown')]")).click();
+        wait(500);
+        List<WebElement> buildingOptions = driver.findElements(By.xpath("//div[@id='fieldRow_FHouseHeight']//ul/li[@data-value]"));
+        for (WebElement opt : buildingOptions) {
+            if (opt.getText().trim().equals(this.buildingFloor)) {
+                opt.click();
+                break;
+            }
+        }
+
+        wait(500);
     }
 
     public void fillIsElevator() {
