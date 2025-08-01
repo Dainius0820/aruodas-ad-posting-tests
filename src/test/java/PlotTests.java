@@ -23,7 +23,7 @@ public class PlotTests {
     }
 
     @Test
-    public void positiveTest() {
+    public void positivePlotAdFormTest() {
         Plot plot = new Plot("Vilnius", "Vilniaus m.", "Baltupiai", "Goštauto", "15", true, "1111-1111-1111:11111", true, new String[]{"Greta miško", "Elektra", "Su pakrante"}, true, true, "pardodu plota", "plot for seil", "a?????", new String[]{"sklypas.jpg"}, "https://www.youtube.com/watch?v=-nWYn6XB6Hg", "tour3d.com", "10000", "+37061111111", "standard@gmail.com", true, true, "Privatus asmuo", true, "45", new String[]{"Namų valda", "Komercinė", "Žemės ūkio"});
         plot.fill();
         String actual = "";

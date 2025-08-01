@@ -101,7 +101,7 @@ public class RealEstate {
 
     public void fillRegion() {
         if (!this.region.isEmpty()) {
-            this.driver.findElements(By.className("dropdown-input-value-title")).get(0).click();
+            this.driver.findElements(By.className("dropdown-input-value-title")).getFirst().click();
             this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(this.region);
             wait(300);
             this.driver.findElement(By.className("dropdown-input-search-value")).sendKeys(Keys.ENTER);
@@ -245,7 +245,7 @@ public class RealEstate {
         }
     }
 
-    public String normalizeInput(String text) {
+    public static String normalizeInput(String text) {
         return text.toLowerCase()
                 .replace("ą", "a")
                 .replace("č", "c")
